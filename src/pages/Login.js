@@ -1,52 +1,65 @@
 import React, { useState } from 'react';
 import { BiShow, BiHide } from 'react-icons/bi';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import loginSignupImage from '../assets/user.png';
-import { toast } from 'react-hot-toast';
-import axios from 'axios'; // Import Axios
+import { toast } from 'react-hot-toast'
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRedux } from '../Redux/userSlice';
 
-function Login() {
-  const navigate = useNavigate();
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: '',
     password: '',
   });
 
+  const navigate = useNavigate();
+
+  const userData = useSelector(state => state)
+  const dispatch = useDispatch()
+
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { email, password } = data;
-    if (email && password) {
-      try {
-        const response = await axios.post('http://localhost:1111/login', data);
-        if (response.data.alert) {
-          toast(response.data.message);
-          setTimeout(() => {
-            navigate('/');
-          }, 1000);
-        } else {
-          toast(response.data.message, { icon: '🚫' });
+  const handleOnChange = (e)=>{
+    const {name,value} = e.target
+    setData((preve)=>{
+        return{
+            ...preve,
+            [name] : value
         }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    } else {
-      alert('Please Enter required fields');
-    }
-  };
+    })
+  }
 
+  const handleSubmit = async(e)=>{
+    e.preventDefault()
+    const {email,password} = data
+    console.log(data)
+    if(email && password ){
+        const fetchData = await fetch('http://localhost:1111/login',{
+          method : "POST",
+          headers : {
+            "content-type" : "application/json"
+          },
+          body : JSON.stringify(data)
+        })
+  
+        const dataRes = await fetchData.json()
+        console.log(dataRes)
+        toast(dataRes.message)
+        
+        if(dataRes.alert){
+          dispatch(loginRedux(dataRes))
+            navigate("/")
+        }
+        console.log(userData)  
+      }
+      else{
+          alert("Please Enter required fields")
+      }
+    }
   return (
     <div className="p-3 mt-40 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex flex-col p-4">

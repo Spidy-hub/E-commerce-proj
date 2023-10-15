@@ -3,9 +3,12 @@ import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { BsCartFill } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 
 function Navbar({ isLoggedIn }) {
   const [showMenu, setShowMenu] = useState(false);
+  const userData = useSelector((state) => state.user)
+  console.log(userData)
 
   const handleShowMenu = () => {
     setShowMenu((prev) => !prev);
@@ -29,8 +32,11 @@ function Navbar({ isLoggedIn }) {
             </div>
           </div>
           <div className='text-slate-600' onClick={handleShowMenu}>
-            <div className='text-3xl cursor-pointer p-3'>
-              <HiOutlineUserCircle />
+            <div className='text-3xl cursor-pointer w-10 h-10 p-3'>
+              {  
+                userData.image ? <image src={userData.image} className='h-full w-full' />:
+                  <HiOutlineUserCircle />
+              }
             </div>
             {showMenu && (
               <div className='md:hidden absolute right-2 top-16 bg-white py-2 px-2 shadow drop-shadow-md'>

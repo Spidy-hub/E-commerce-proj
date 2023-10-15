@@ -7,8 +7,7 @@ import { toast } from "react-hot-toast";
 import { ImagetoBase64 } from "../utility/ImagetoBase64";
 
 
-function Register() {
-  const navigate = useNavigate();
+const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [data, setData] = useState({
@@ -19,7 +18,8 @@ function Register() {
     cpassword: "",
     image : ""
   }); 
-  
+  const navigate = useNavigate();
+
   const handleShowPassword = () => {
     setShowPassword((preve) => !preve);
   };
@@ -59,7 +59,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { firstName, lastName, email, password, cpassword } = data;
-  
+    console.log(data)
     if (firstName && lastName && email && password && cpassword ) {
       if (password === cpassword) {
         try {

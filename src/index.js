@@ -12,7 +12,9 @@ import {
 import Home from "./pages/Home";
 import Login from './pages/Login';
 import Register from './pages/Register';
-
+import PageNotFound from './pages/404';
+import { store  } from './Redux/index';
+import { Provider } from 'react-redux';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,14 +22,16 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path='*' element={<PageNotFound />} />
     </Route>
   )
 );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
   
 );
 

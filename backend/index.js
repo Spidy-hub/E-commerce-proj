@@ -1,15 +1,21 @@
 const express = require('express')
+const mongoose = require("mongoose")
 require('./config/db')
 const app = express()
 require('dotenv').config()
-const route = require('./routes/auth') 
+const route = require('./routes/auth')
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const { requireAuth, checkUser } = require('./middleware/middleware');
 const cors = require('cors')
 
+
+app.use(cors())
 app.use(express.json())
 app.use(cookieParser());
-app.use(cors())
+
+// Increase payload size limit to 10MB
+app.use(bodyParser.json({ limit: '10mb' }));
 
 
 app.get('*', checkUser);
@@ -22,6 +28,35 @@ app.get('/login',(req, res) => {
 app.get('/register',(req, res) => {
     console.log(req.body)
 })
+
+
+//product section
+
+const productSchema = mongoose.Schema({
+    name: String,
+    category:String,
+    image: String,
+    price: String,
+    description: String,
+  });
+  const productModel = mongoose.model("product",productSchema)
+  
+  
+  
+  //save product in data 
+  //api
+  app.post("/uploadProduct",async(req,res)=>{
+      // console.log(req.body)
+      const data = await productModel(req.body)
+      const datasave = await data.save()
+      res.send({message : "Upload successfully"})
+  })
+  
+  //
+  app.get("/product",async(req,res)=>{
+    const data = await productModel.find({})
+    res.send(JSON.stringify(data))
+  })
 
 app.use("/", route)
 

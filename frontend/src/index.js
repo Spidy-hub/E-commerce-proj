@@ -15,13 +15,15 @@ import Register from './pages/Register';
 import PageNotFound from './pages/404';
 import { store  } from './Redux/index';
 import { Provider } from 'react-redux';
+import NewProducts from './pages/NewProducts'
 
-const router = createBrowserRouter(
+const router = createBrowserRouter( 
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="newproducts" element={<NewProducts />} />
       <Route path='*' element={<PageNotFound />} />
     </Route>
   )

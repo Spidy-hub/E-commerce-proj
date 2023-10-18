@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
 import user from '../assets/user.png'
 import { BiShow, BiHide } from "react-icons/bi";
@@ -62,29 +61,30 @@ const Register = () => {
     console.log(data)
     if (firstName && lastName && email && password && cpassword ) {
       if (password === cpassword) {
-        try {
-          const response = await axios.post('http://localhost:1111/register', data, {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
+        const fetchData = await fetch("http://localhost:1111/register",{
+          method : "POST",
+          headers : {
+            "content-type" : "application/json"
+          },
+          body : JSON.stringify(data)
+        })
 
-          if (response.data.alert) {
-            toast(response.data.message);
-            navigate('/login');
-          } else {
-            toast.error(response.data.message, { icon: '🚫' });
-          }
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      } else {
-        alert("Password and Confirm Password do not match.");
+        const dataRes = await fetchData.json()
+  
+
+      // alert(dataRes.message);
+      toast(dataRes.message)
+      if(dataRes.alert){
+        navigate("/login");
       }
+     
     } else {
-      alert('Please fill in all required fields.');
+      alert("password and confirm password not equal");
     }
-  };
+  } else {
+    alert("Please Enter required fields");
+  }
+};
   
     
   return (

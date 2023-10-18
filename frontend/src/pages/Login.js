@@ -13,7 +13,6 @@ const Login = () => {
     email: '',
     password: '',
   });
-
   const navigate = useNavigate();
 
   const userData = useSelector(state => state)
@@ -38,28 +37,32 @@ const Login = () => {
     const {email,password} = data
     console.log(data)
     if(email && password ){
-        const fetchData = await fetch('http://localhost:1111/login',{
+        const fetchData = await fetch("http://localhost:1111/login",{
           method : "POST",
           headers : {
             "content-type" : "application/json"
           },
           body : JSON.stringify(data)
         })
-  
         const dataRes = await fetchData.json()
         console.log(dataRes)
+      
         toast(dataRes.message)
-        
+      
         if(dataRes.alert){
           dispatch(loginRedux(dataRes))
+          setTimeout(() => {
             navigate("/")
+          }, 1000);
         }
-        console.log(userData)  
+
+      console.log(userData) 
       }
-      else{
-          alert("Please Enter required fields")
-      }
+    else{
+        alert("Please Enter required fields")
     }
+  }
+
   return (
     <div className="p-3 mt-40 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex flex-col p-4">

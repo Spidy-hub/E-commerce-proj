@@ -2,7 +2,7 @@ import Navbar from "./pages/Navbar";
 import { Outlet } from "react-router-dom";
 import { Toaster } from "react-hot-toast"; 
 import { useEffect } from "react";
-import { setDataProduct } from "./Redux/productSlide";
+// import { setDataProduct } from "./Redux/productSlide";
 import { useDispatch, useSelector } from "react-redux";
 
 function App() {

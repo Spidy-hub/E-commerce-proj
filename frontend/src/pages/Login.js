@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import loginSignupImage from '../assets/user.png';
 import { toast } from 'react-hot-toast'
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { loginRedux } from '../Redux/userSlice';
+
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,9 +13,6 @@ const Login = () => {
     password: '',
   });
   const navigate = useNavigate();
-
-  const userData = useSelector(state => state)
-  const dispatch = useDispatch()
 
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -32,36 +28,36 @@ const Login = () => {
     })
   }
 
-  const handleSubmit = async(e)=>{
-    e.preventDefault()
-    const {email,password} = data
-    console.log(data)
-    if(email && password ){
-        const fetchData = await fetch("http://localhost:1111/login",{
-          method : "POST",
-          headers : {
-            "content-type" : "application/json"
-          },
-          body : JSON.stringify(data)
-        })
-        const dataRes = await fetchData.json()
-        console.log(dataRes)
-      
-        toast(dataRes.message)
-      
-        if(dataRes.alert){
-          dispatch(loginRedux(dataRes))
-          setTimeout(() => {
-            navigate("/")
-          }, 1000);
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = data;
 
-      console.log(userData) 
+    if(email && password) {
+      try {
+        const fetchData = await fetch('http://localhost:1111/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (fetchData.status === 200) {
+          const dataRes = await fetchData.json();
+          toast.success(dataRes.message);
+            navigate('/'); // Redirect to the home page
+        } else {
+          const errorData = await fetchData.json();
+          toast.error(errorData.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        toast.error('An error occurred while logging in.');
       }
-    else{
-        alert("Please Enter required fields")
+    } else {
+      toast.error('Please enter required fields');
     }
-  }
+  };
 
   return (
     <div className="p-3 mt-40 md:p-4">

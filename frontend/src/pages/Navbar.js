@@ -29,11 +29,11 @@ function Navbar() {
       <div className='flex items-center h-full justify-between'>
         <Link to=''>
           <div className='h-14 m-1 flex flex-row'>
-            <img src={"https://o.remove.bg/downloads/483cf6a7-c9b7-476c-acc3-ea36205ac828/Online-shop-shopping-shop-logo-by-DEEMKA-STUDIO-3-580x406-removebg-preview.png"}
+          <img src={"https://o.remove.bg/downloads/c9d5146f-17e6-447e-bd25-1669c1763e7c/WhatsApp_Image_2023-10-18_at_4.19.51_PM-removebg-preview.png  "}
               alt='logo' 
               className="w-22 h-20 -mr-7 p-1 -m-3"
             />
-            <span className='text-red-500 text-xl mt-3 font-bold'>KIRA</span><span className="text-xl text-red-500 mt-3 font-bold">-SHOP</span>
+            {/* <span className='text-red-500 text-xl mt-3 font-bold'>KIRA</span><span className="text-xl text-red-500 mt-3 font-bold">-SHOP</span> */}
           </div>
         </Link>
 

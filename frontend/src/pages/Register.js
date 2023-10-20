@@ -70,11 +70,8 @@ const Register = () => {
         })
 
         const dataRes = await fetchData.json()
-  
-
-      // alert(dataRes.message);
-      toast(dataRes.message)
-      if(dataRes.alert){
+        toast(dataRes.message)
+      if(dataRes.success === 200){
         navigate("/login");
       }
      

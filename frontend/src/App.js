@@ -11,7 +11,7 @@ function App() {
   
   useEffect(() => {
     ( async() => {
-      const res = await fetch("http://localhost:1111/product")
+      const res = await fetch("http://localhost:8000/product")
       const resData = await res.json()
       console.log(resData)
       // dispatch(setDataProduct(resData))

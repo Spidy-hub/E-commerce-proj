@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { BsCartFill } from 'react-icons/bs';
+import logo from '../assets/logo.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutRedux } from '../Redux/userSlice';
 import { toast } from 'react-hot-toast';
@@ -29,7 +30,7 @@ function Navbar() {
       <div className='flex items-center h-full justify-between'>
         <Link to=''>
           <div className='h-14 m-1 flex flex-row'>
-          <img src={"https://o.remove.bg/downloads/c9d5146f-17e6-447e-bd25-1669c1763e7c/WhatsApp_Image_2023-10-18_at_4.19.51_PM-removebg-preview.png  "}
+          <img src={logo}
               alt='logo' 
               className="w-22 h-20 -mr-7 p-1 -m-3"
             />

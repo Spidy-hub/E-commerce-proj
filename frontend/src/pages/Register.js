@@ -61,25 +61,28 @@ const Register = () => {
     console.log(data)
     if (firstName && lastName && email && password && cpassword ) {
       if (password === cpassword) {
-        const fetchData = await fetch("http://localhost:1111/register",{
-          method : "POST",
-          headers : {
-            "content-type" : "application/json"
-          },
-          body : JSON.stringify(data)
-        })
-
-        const dataRes = await fetchData.json()
-        toast(dataRes.message)
-      if(dataRes.success === 200){
-        navigate("/login");
-      }
-     
+        if (password.length > 6 && cpassword.length > 6) {
+          const fetchData = await fetch("http://localhost:8000/register",{
+            method : "POST",
+            headers : {
+              "content-type" : "application/json"
+            },
+            body : JSON.stringify(data)
+          })
+  
+          const dataRes = await fetchData.json()
+          toast(dataRes.message)
+          if(dataRes.success === 200){
+            navigate("/login");
+          }
+        }else{
+          toast("Password length must be greater than 6")
+        }     
     } else {
-      alert("password and confirm password not equal");
+      toast("password and confirm password not equal");
     }
   } else {
-    alert("Please Enter required fields");
+    toast("Please Enter required fields");
   }
 };
   

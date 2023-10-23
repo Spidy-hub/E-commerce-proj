@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { BiShow, BiHide } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import loginSignupImage from '../assets/user.png';
-import { toast } from 'react-hot-toast'
-import { useNavigate } from "react-router-dom";
-
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,36 +18,34 @@ const Login = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleOnChange = (e)=>{
-    const {name,value} = e.target
-    setData((preve)=>{
-        return{
-            ...preve,
-            [name] : value
-        }
-    })
-  }
+  const handleOnChange = (e) => {
+    const { name, value } = e.target; 
+    setData((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = data;
-
-    if(email && password) {
+    if (email && password) {
       try {
-        const fetchData = await fetch('http://localhost:1111/login', {
-          method: 'POST',
+        const response = await axios.post('http://localhost:8000/login', data, {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
         });
 
-        if (fetchData.status === 200) {
-          const dataRes = await fetchData.json();
+        if (response.status === 200) {
+          const dataRes = response.data;
           toast.success(dataRes.message);
-            navigate('/'); // Redirect to the home page
+          navigate('/');
         } else {
-          const errorData = await fetchData.json();
+          const errorData = response.data;
           toast.error(errorData.message);
         }
       } catch (error) {
@@ -55,7 +53,7 @@ const Login = () => {
         toast.error('An error occurred while logging in.');
       }
     } else {
-      toast.error('Please enter required fields');
+      toast.error('Please enter both email and password');
     }
   };
 
@@ -78,7 +76,7 @@ const Login = () => {
             onChange={handleOnChange}
           />
 
-          <div className="flex justify between items-center">
+          <div className="flex justify-between items-center">
             <label className="flex-1" htmlFor="password">
               Password
             </label>
@@ -115,6 +113,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Login;

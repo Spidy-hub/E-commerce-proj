@@ -65,28 +65,27 @@ module.exports.register =  async(req, res) =>{
 
 
 module.exports.login = async(req, res) => {
-  try {
       const {email, password} = req.body
       if(email && password){
+        try{
           const userExist = await User.findOne({email : email})
-          if(userExist != null){
-              const isMatch = await bcrypt.compare(password, userExist.password)
-              if((userExist.email === email) && isMatch){
-                  const token = createToken(userExist ? userExist.id : null);
-                  res.cookie('jwt', token, { httpOnly: true, maxAge: maxage * 1000 }) 
+            if(userExist != null){
+                const isMatch = await bcrypt.compare(password, userExist.password)
+                if((userExist.email === email) && isMatch){
+                    const token = createToken(userExist ? userExist.id : null);
+                    res.cookie('jwt', token, { httpOnly: true, maxAge: maxage * 1000 }) 
                 //   res.status(200).json({userExist});
-                res.redirect('/')
-              }else{
-                  return res.send({'status':"failed", "message":"Email or Password is not Valid"})
-              }
-          }else{
-              return res.send({'status':"failed", "message":"You are not a Register User"})
-          }   
-      }    
-  } catch (error) {
-      console.log(error)
-      return res.send({"status":"failed", "message": "server error"})
-  }
+                    res.redirect('/')
+                }else{
+                    return res.send({'status':"failed", "message":"Email or Password is not Valid"})
+                }
+            }else{
+                return res.send({'status':"failed", "message":"You are not a Register User"})
+            }   
+        }catch (error) { console.log(error)
+            return res.send({"status":"failed", "message": "server error"})
+        } 
+    }  
 }
 
 module.exports.logout_get= (req, res) => {

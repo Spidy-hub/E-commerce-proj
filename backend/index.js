@@ -8,6 +8,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const { requireAuth, checkUser } = require('./middleware/middleware');
 const cors = require('cors')
+const multer = require('multer');
+
 
 
 app.use(cors())
@@ -38,15 +40,18 @@ const productSchema = mongoose.Schema({
     image: String,
     price: String,
     description: String,
-  });
+  }); 
   const productModel = mongoose.model("product",productSchema)
   
   
   
   //save product in data 
   //api
-  app.post("/uploadProduct",async(req,res)=>{
-      // console.log(req.body)
+  const storage = multer.memoryStorage();
+  const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB limit
+
+  app.post("/uploadProduct", upload.single('file'),async(req,res)=>{
+      // console.log(req.body)  
       const data = await productModel(req.body)
       const datasave = await data.save()
       res.send({message : "Upload successfully"})

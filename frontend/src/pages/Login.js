@@ -4,14 +4,11 @@ import { Link } from 'react-router-dom';
 import loginSignupImage from '../assets/user.png';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
+import axios from 'axios';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-  });
+  const [data, setData] = useState({ email: '', password: ''});
   const navigate = useNavigate();
 
   const handleShowPassword = () => {
@@ -28,7 +25,6 @@ const Login = () => {
     });
   };
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = data;
@@ -68,7 +64,7 @@ const Login = () => {
         <form className="w-full py-3 flex flex-col" onSubmit={handleSubmit}>
           <label htmlFor="email">Email</label>
           <input
-            type="email"
+            type={"email"}
             id="email"
             name="email"
             className="mt-1 mb-2 w-full bg-slate-200 px-2 py-1 rounded focus-within:outline-blue-300"
@@ -86,12 +82,12 @@ const Login = () => {
           </div>
 
           <div className="flex px-2 py-1 bg-slate-200 rounded mt-1 mb-2 focus-within:outline focus-within:outline-blue-300">
-            <input
+            <input              
               type={showPassword ? 'text' : 'password'}
               id="password"
               name="password"
               className="w-full bg-slate-200 border-none outline-none"
-              value={data.password}
+              value={data.password} 
               onChange={handleOnChange}
             />
 
@@ -100,7 +96,7 @@ const Login = () => {
             </span>
           </div>
 
-          <button className="w-full max-w-[150px] m-auto bg-red-500 hover:bg-red-600 cursor-pointer text-white text-xl font-medium text-center py-1 rounded-full mt-4">
+          <button type='submit' className="w-full max-w-[150px] m-auto bg-red-500 hover:bg-red-600 cursor-pointer text-white text-xl font-medium text-center py-1 rounded-full mt-4">
             Login
           </button>
         </form>

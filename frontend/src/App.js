@@ -3,11 +3,11 @@ import { Outlet } from "react-router-dom";
 import { Toaster } from "react-hot-toast"; 
 import { useEffect } from "react";
 // import { setDataProduct } from "./Redux/productSlide";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 
 function App() {
-  const dispatch = useDispatch()
-  const productData = useSelector((state)=>state.product)
+  // const dispatch = useDispatch()
+  // const productData = useSelector((state)=>state.product)
   
   useEffect(() => {
     ( async() => {
@@ -18,7 +18,7 @@ function App() {
     })()
   }, [])
 
-  console.log(productData)
+  // console.log(productData)
   return (
     <>
       <Toaster />

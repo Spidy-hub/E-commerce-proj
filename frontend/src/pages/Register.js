@@ -58,10 +58,9 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { firstName, lastName, email, password, cpassword } = data;
-    console.log(data)
     if (firstName && lastName && email && password && cpassword ) {
       if (password === cpassword) {
-        if (password.length > 6 && cpassword.length > 6) {
+        if (password.length >= 6 && cpassword.length >= 6) {
           const fetchData = await fetch("http://localhost:8000/register",{
             method : "POST",
             headers : {
@@ -69,7 +68,7 @@ const Register = () => {
             },
             body : JSON.stringify(data)
           })
-  
+          console.log(data)
           const dataRes = await fetchData.json()
           toast(dataRes.message)
           if(dataRes.success === 200){
@@ -169,7 +168,7 @@ const Register = () => {
             </span>
           </div>
 
-          <button className="w-full max-w-[150px] m-auto  bg-red-500 hover:bg-red-600 cursor-pointer  text-white text-xl font-medium text-center py-1 rounded-full mt-4">
+          <button type='submit' className="w-full max-w-[150px] m-auto  bg-red-500 hover:bg-red-600 cursor-pointer  text-white text-xl font-medium text-center py-1 rounded-full mt-4">
             Register
           </button>
         </form>

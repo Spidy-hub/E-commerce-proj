@@ -35,7 +35,7 @@ const Login = () => {
             'Content-Type': 'application/json',
           },
         });
-
+        console.log(data)
         if (response.status === 200) {
           const dataRes = response.data;
           toast.success(dataRes.message);

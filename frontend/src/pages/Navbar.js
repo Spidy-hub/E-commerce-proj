@@ -25,7 +25,7 @@ function Navbar() {
   console.log(process.env.REACT_APP_ADMIN_EMAIL);
 
   return (
-    <header className='fixed shadow-md w-full h-16 px-2 md:px-4 z-50 bg-white'>
+    <header className='fixed bg-white  w-full h-16 px-2 md:px-4 z-50 '>
       {/* desktop */}
       <div className='flex items-center h-full justify-between'>
         <Link to=''>
@@ -77,7 +77,7 @@ function Navbar() {
                   </>
                 ) : (
                   <>
-                    <Link to='/newproducts' className='whitespace-nowrap cursor-pointer block my-2 bg-red-500 text-white p-1 rounded-sm'> 
+                    <Link to='/newproducts' className='whitespace-nowrap cursor-pointer block my-2 bg-red-500 text-white p-2 rounded-lg'> 
                       New Products
                     </Link>
                     <Link to='/login' className='whitespace-nowrap cursor-pointer block my-2 '>
